@@ -1,3 +1,6 @@
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad: true});</script>
+
 # 内部設計仕様書  
 
 本書では、AIのI/F詳細および機能詳細の説明を行う。  
@@ -54,6 +57,16 @@ sequenceDiagram
     participant fix_message as 固定メッセ
     participant terminal_mng as 通信監理
 ```
+
+<div class="mermaid">
+sequenceDiagram
+    participant LINE as LINE
+    participant Flask as Flask
+    participant chatbot_main as チャットボットmain
+    participant message_main as メッセージmain
+    participant fix_message as 固定メッセ
+    participant terminal_mng as 通信監理
+</div>
 
 ## おはようメッセージ  
 
