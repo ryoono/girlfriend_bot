@@ -123,6 +123,8 @@ sequenceDiagram
 
 ## Web API 詳細  
 
+WebAPIの使用方法を以下に示す。  
+
 ### Chaplus  
 
 ### Einstein  
