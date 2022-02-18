@@ -48,12 +48,14 @@ Table 表示名および「ひとこと」
 AIは甘いものが好きなため、先日行ったカフェをトップ画像に設定している。  
 
 Fig. トップ画像  
-![top](./image/d73036e8cf11c2697df2fec4bb2ba814.jpg)  
+![top](./image/top.jpg)  
+https://free-materials.com/%E3%82%AB%E3%83%95%E3%82%A7%E3%83%A9%E3%83%86%EF%BC%88%E3%83%A9%E3%83%86%E3%82%A2%E3%83%BC%E3%83%88%EF%BC%8903/  
 
 ### LINE アイコン画像  
 
 Fig. アイコン画像  
-![icon](./image/animal_buta_face_4620.png)  
+![icon](./image/icon.png)  
+http://www.illustrecipe.com/archives/429  
 
 ## LINE機能説明  
 
