@@ -97,7 +97,7 @@ sequenceDiagram
     tenki_webAPI -->> terminal_mng: 天気予報
     terminal_mng -->> weather_message: 天気予報
     weather_message -->> morning_message: 天気予報メッセ
-    morning_message ->> message_main: おはようメッセ
+    morning_message -->> message_main: おはようメッセ
 ```
 
 ## チャットメッセージ  
