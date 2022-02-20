@@ -46,19 +46,22 @@ handler = WebhookHandler(channel_secret)
 # LINEからはhttp://~/callbackに送信する設定になっている
 @app.route("/callback", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
+
+    # リクエストヘッダーから署名検証のための値を取得
     signature = request.headers['X-Line-Signature']
 
-    # get request body as text
+    # リクエストボディを取得
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    # handle webhook body
+    # 署名を検証し、問題なければhandleに定義されている関数を呼び出す
+    # 署名検証で失敗したときは例外をあげる
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
 
+    # handleの処理を終える
     return 'OK'
 
 # Webhookからのリクエストをチェック(GASからのモーニング割り込み？)
@@ -68,6 +71,8 @@ def morning():
     # MEMO 朝の定期実行コードを記述する
     messages = TextSendMessage(text=f"おはよう")
     line_bot_api.push_message(user_id, messages=messages)
+
+    return 'OK'
     
 
 # LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に実行
