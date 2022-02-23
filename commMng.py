@@ -39,7 +39,19 @@ line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
 def sendLineMsg( msgRes ):
-   str = msgRes['morningMsg']
-   messages = TextSendMessage(text=str)
+
+   if msgRes['type'] == myConst.MORNING_WEEKDAY_MSG_TYPE or msgRes['type'] == myConst.MORNING_HOLIDAY_MSG_TYPE:
+      
+      if msgRes['isMorningMsg'] == True:
+         morningMsg = msgRes['morningMsg']
+         line_bot_api.push_message(user_id, messages=TextSendMessage(text=morningMsg))
+      
+      if msgRes['isStamp'] == True:
+         stampNum = StickerSendMessage(package_id=msgRes['stampMsg'][0], sticker_id=msgRes['stampMsg'][1])
+         line_bot_api.push_message(user_id, messages=stampNum)
+
+      # if msgRes['isWeatherMsg'] == True:
+
+   # messages = TextSendMessage(text=str)
    # messages = StickerSendMessage(package_id='6325', sticker_id='10979918')
-   line_bot_api.push_message(user_id, messages=messages)
+   # line_bot_api.push_message(user_id, messages=messages)

@@ -1,14 +1,30 @@
 # -*- coding: utf-8 -*-
 
+import random
+
 import greeting
+import stamp
+
+# スタンプメッセージ発生割合( 0% ~ 100% )
+STAMP_OCCURRENCE_RATIO = 50
 
 def goodMorningMain( getMsgData ):
    
    msgRes = {}
-   msgRes['isMorningMsg'] = True
+   msgRes['type'] = getMsgData['type']
 
+   # 挨拶作成
+   msgRes['isMorningMsg'] = True
    msgRes['morningMsg'] = greeting.greetingMain()
-   msgRes['isStamp'] = False
+
+   # スタンプ作成
+   if random.randint( 0, 99) < STAMP_OCCURRENCE_RATIO:
+      msgRes['isStamp'] = True
+      msgRes['stampMsg'] = stamp.stampMain()
+   else:
+      msgRes['isStamp'] = False
+
+   # 天気予報作成
    msgRes['isWeatherMsg'] = False
    
    return msgRes

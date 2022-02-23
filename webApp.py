@@ -19,6 +19,9 @@ from linebot.models import (
 import requests
 import json
 
+import myConst
+import chatbotMain
+
 app = Flask(__name__)
 
 # 環境変数を参照し変数に格納
@@ -69,8 +72,12 @@ def callback():
 @app.route("/morning", methods=['POST'])
 def morning():
     # MEMO 朝の定期実行コードを記述する
-    messages = TextSendMessage(text=f"おはよう")
-    line_bot_api.push_message(user_id, messages=messages)
+    # messages = TextSendMessage(text=f"おはよう")
+    # line_bot_api.push_message(user_id, messages=messages)
+
+    msgInfo = {}
+    msgInfo['type'] = myConst.MORNING_WEEKDAY_MSG_TYPE
+    chatbotMain.chatbotMain( msgInfo )
 
     return 'OK'
     
