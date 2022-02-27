@@ -8,6 +8,8 @@ line-bot-sdk = "==1.19.0"
 requests = "==2.25.1"
 Flask = "==2.0.0"
 beautifulsoup4 = "*"
+lxml = "*"
+numpy = "*"
 
 [dev-packages]
 

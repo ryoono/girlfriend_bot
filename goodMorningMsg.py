@@ -4,6 +4,7 @@ import random
 
 import greeting
 import stamp
+import weatherForecast
 
 # スタンプメッセージ発生割合( 0% ~ 100% )
 STAMP_OCCURRENCE_RATIO = 50
@@ -25,6 +26,7 @@ def goodMorningMain( getMsgData ):
       msgRes['isStamp'] = False
 
    # 天気予報作成
-   msgRes['isWeatherMsg'] = False
+   msgRes['isWeatherMsg'] = True
+   msgRes['WeatherMsg'] = weatherForecast.weatherForecastMain()
    
    return msgRes

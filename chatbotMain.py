@@ -7,4 +7,4 @@ def chatbotMain( getMsgData ):
 
    msgRes = messageMain.massageMain( getMsgData )
 
-   commMng.sendLineMsg( msgRes )
+   commMng.sendPushLineMsg( msgRes )

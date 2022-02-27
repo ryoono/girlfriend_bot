@@ -28,7 +28,7 @@ app = Flask(__name__)
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
 channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
 user_id = os.getenv('LINE_USER_ID', None)
-chaplus_key = os.environ.get("CHAPLUS_KEY")
+chaplus_key = os.getenv('CHAPLUS_KEY', None)
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
     sys.exit(1)

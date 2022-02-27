@@ -5,6 +5,7 @@ import myConst
 import os
 import sys
 import requests
+from bs4 import BeautifulSoup
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -38,19 +39,28 @@ if chaplus_key is None:
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
-def sendLineMsg( msgRes ):
+# 引数の1時間天気予報を取得する
+def getTenki_jp( url ):
+    
+    r = requests.get( url )
+    html = r.text.encode( r.encoding )
+    return BeautifulSoup( html, 'lxml')
+
+# ラインにメッセージを送信する
+def sendPushLineMsg( msgRes ):
 
    if msgRes['type'] == myConst.MORNING_WEEKDAY_MSG_TYPE or msgRes['type'] == myConst.MORNING_HOLIDAY_MSG_TYPE:
-      
-      if msgRes['isMorningMsg'] == True:
-         morningMsg = msgRes['morningMsg']
-         line_bot_api.push_message(user_id, messages=TextSendMessage(text=morningMsg))
-      
-      if msgRes['isStamp'] == True:
-         stampNum = StickerSendMessage(package_id=msgRes['stampMsg'][0], sticker_id=msgRes['stampMsg'][1])
-         line_bot_api.push_message(user_id, messages=stampNum)
-
-      # if msgRes['isWeatherMsg'] == True:
+        if msgRes['isMorningMsg'] == True:
+           morningMsg = msgRes['morningMsg']
+           line_bot_api.push_message( user_id, messages=TextSendMessage(text=morningMsg))
+           
+        if msgRes['isStamp'] == True:
+            stampNum = StickerSendMessage(package_id=msgRes['stampMsg'][0], sticker_id=msgRes['stampMsg'][1])
+            line_bot_api.push_message( user_id, messages=stampNum)
+            
+        if msgRes['isWeatherMsg'] == True:
+            weatherMsg = msgRes['WeatherMsg']
+            line_bot_api.push_message( user_id, messages=TextSendMessage(text=weatherMsg))
 
    # messages = TextSendMessage(text=str)
    # messages = StickerSendMessage(package_id='6325', sticker_id='10979918')
