@@ -1,6 +1,6 @@
 Flask==2.0.0
 line-bot-sdk==1.19.0
 requests==2.25.1
-beautifulsoup4 = "*"
-lxml = "*"
-numpy = "*"
+beautifulsoup4==4.10.0
+lxml==4.8.0
+numpy==1.22.2
