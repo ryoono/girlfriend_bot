@@ -76,15 +76,13 @@ def sendPushLineMsg( msgRes ):
             line_bot_api.push_message( user_id, messages=TextSendMessage(text=morningMsg))
         
         if msgRes['isStamp'] == True:
-            stampNum = StickerSendMessage(package_id=msgRes['stampMsg'][0], sticker_id=msgRes['stampMsg'][1])
+            stampNum = StickerSendMessage( package_id=msgRes['stampMsg'][0], sticker_id=msgRes['stampMsg'][1])
             line_bot_api.push_message( user_id, messages=stampNum)
             
         if msgRes['isWeatherMsg'] == True:
             weatherMsg = msgRes['WeatherMsg']
             line_bot_api.push_message( user_id, messages=TextSendMessage(text=weatherMsg))
 
+    # チャットメッセージの場合
     elif msgRes['type'] == myConst.CHAT_MSG_TYPE:
-        line_bot_api.reply_message(
-            msgRes['reply_token'],
-            msgRes['res_mes']
-        )
+        line_bot_api.reply_message( msgRes['reply_token'], messages=TextSendMessage(text=msgRes['res_mes']))
