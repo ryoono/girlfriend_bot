@@ -6,13 +6,13 @@ from argparse import ArgumentParser
 
 from flask import Flask, request, abort
 from linebot import (
-    WebhookHandler
+    LineBotApi, WebhookHandler
 )
 from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage
+    MessageEvent, TextMessage, TextSendMessage, MessageAction, TemplateSendMessage, ButtonsTemplate
 )
 
 import myConst
