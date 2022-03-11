@@ -9,6 +9,7 @@ import weatherForecast
 # スタンプメッセージ発生割合( 0% ~ 100% )
 STAMP_OCCURRENCE_RATIO = 50
 
+# おはようメッセージを作成する
 def goodMorningMain( getMsgData ):
    
    msgRes = {}
