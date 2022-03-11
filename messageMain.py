@@ -2,7 +2,9 @@
 
 import myConst
 import goodMorningMsg
+import chatMsg
 
+# 作成するメッセージに応じて関数をCALLする
 def massageMain( getMsgData ):
 
    # メッセージの種類を解析する
@@ -16,7 +18,7 @@ def massageMain( getMsgData ):
 
    # チャットメッセージの場合
    elif getMsgData['type'] == myConst.CHAT_MSG_TYPE:
-      msgRes = 2
+      msgRes = chatMsg.chatMain( getMsgData )
 
    # 画像メッセージの場合
    elif getMsgData['type'] == myConst.IMAGE_MSG_TYPE:

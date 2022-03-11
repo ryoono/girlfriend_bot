@@ -6,18 +6,14 @@ from argparse import ArgumentParser
 
 from flask import Flask, request, abort
 from linebot import (
-    LineBotApi, WebhookHandler
+    WebhookHandler
 )
 from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, MessageAction, TemplateSendMessage,
-    ButtonsTemplate
+    MessageEvent, TextMessage
 )
-
-import requests
-import json
 
 import myConst
 import chatbotMain
@@ -26,24 +22,11 @@ app = Flask(__name__)
 
 # 環境変数を参照し変数に格納
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
-channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
-user_id = os.getenv('LINE_USER_ID', None)
-chaplus_key = os.getenv('CHAPLUS_KEY', None)
 if channel_secret is None:
     print('Specify LINE_CHANNEL_SECRET as environment variable.')
     sys.exit(1)
-if channel_access_token is None:
-    print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
-    sys.exit(1)
-if user_id is None:
-    print('Specify LINE_USER_ID as environment variable.')
-    sys.exit(1)
-if chaplus_key is None:
-    print('Specify chaplus_key as environment variable.')
-    sys.exit(1)
 
-line_bot_api = LineBotApi(channel_access_token)
-handler = WebhookHandler(channel_secret)
+handler = WebhookHandler( channel_secret )
 
 # Webhookからのリクエストをチェック(LINEトークから)
 # LINEからはhttp://~/callbackに送信する設定になっている
@@ -71,9 +54,6 @@ def callback():
 # GASからはhttp://~/morningに送信する設定になっている
 @app.route("/morning", methods=['POST'])
 def morning():
-    # MEMO 朝の定期実行コードを記述する
-    # messages = TextSendMessage(text=f"おはよう")
-    # line_bot_api.push_message(user_id, messages=messages)
 
     msgInfo = {}
     msgInfo['type'] = myConst.MORNING_WEEKDAY_MSG_TYPE
@@ -86,44 +66,14 @@ def morning():
 # reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークン
 # 第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクト
 @handler.add(MessageEvent, message=TextMessage)
-def message_text(event):
+def message_text( event ):
 
-    print( 'output_mess : ' + event.message.text )
+    msgInfo = {}
+    msgInfo['type'] = myConst.CHAT_MSG_TYPE
+    msgInfo['msg'] = event.message.text
+    msgInfo['reply_token'] = event.reply_token
 
-    # リクエストに必要なパラメーター
-    headers = {'Content-Type':'application/json'}
-    payload = {'utterance':event.message.text}
-    # APIKEYの部分は自分のAPI鍵を代入してください
-    url = 'https://www.chaplus.jp/v1/chat?apikey=' + chaplus_key
-
-    print('payload')
-    print(payload)
-
-    # APIを叩く
-    res = requests.post(url=url, headers=headers, data=json.dumps(payload))
-    print('res')
-    print(res)
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        #TextSendMessage(text=event.message.text)
-        TextSendMessage(text=res.json()['bestResponse']['utterance'])
-    )
-    # profile = line_bot_api.get_profile(event.source.user_id)
-
-    # status_msg = profile.status_message
-    # if status_msg != "None":
-    #     # LINEに登録されているstatus_messageが空の場合は、"なし"という文字列を代わりの値とする
-    #     status_msg = "なし"
-
-    # messages = TemplateSendMessage(alt_text="Buttons template",
-    #                                template=ButtonsTemplate(
-    #                                    thumbnail_image_url=profile.picture_url,
-    #                                    title=profile.display_name,
-    #                                    text=profile.user_id,
-    #                                    actions=[MessageAction(label="成功", text="次は何を実装しましょうか？")]))
-
-    # line_bot_api.reply_message(event.reply_token, messages=profile.user_id)
+    chatbotMain.chatbotMain( msgInfo )
 
 
 if __name__ == "__main__":
