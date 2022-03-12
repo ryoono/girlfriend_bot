@@ -12,7 +12,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, MessageAction, TemplateSendMessage, ButtonsTemplate
+    MessageEvent, TextMessage, TextSendMessage, MessageAction, TemplateSendMessage, ButtonsTemplate,
+    ImageMessage, ImageSendMessage
 )
 
 import myConst
@@ -74,6 +75,22 @@ def message_text( event ):
     msgInfo['reply_token'] = event.reply_token
 
     chatbotMain.chatbotMain( msgInfo )
+
+
+# LINEでMessageEvent（画像を送信された場合）が起こった場合に実行
+@handler.add(MessageEvent, message=ImageMessage)
+def message_image( event ):
+
+    msgInfo = {}
+    msgInfo['type'] = myConst.MORNING_WEEKDAY_MSG_TYPE
+    chatbotMain.chatbotMain( msgInfo )
+
+    # msgInfo = {}
+    # msgInfo['type'] = myConst.CHAT_MSG_TYPE
+    # msgInfo['msg'] = event.message.text
+    # msgInfo['reply_token'] = event.reply_token
+
+    # chatbotMain.chatbotMain( msgInfo )
 
 
 if __name__ == "__main__":

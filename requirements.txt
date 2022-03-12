@@ -4,3 +4,4 @@ requests==2.25.1
 beautifulsoup4==4.10.0
 lxml==4.8.0
 numpy==1.22.2
+pycryptodome==2.5.1

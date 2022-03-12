@@ -10,6 +10,7 @@ Flask = "==2.0.0"
 beautifulsoup4 = "*"
 lxml = "*"
 numpy = "*"
+pycryptodome = "*"
 
 [dev-packages]
 
