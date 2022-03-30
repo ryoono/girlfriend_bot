@@ -7,6 +7,7 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import json
+import time
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -15,7 +16,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, MessageAction, TemplateSendMessage, ButtonsTemplate
+    MessageEvent, TextMessage, TextSendMessage, MessageAction, TemplateSendMessage, ButtonsTemplate, StickerSendMessage
 )
 
 # 環境変数を参照し変数に格納
@@ -74,10 +75,12 @@ def sendPushLineMsg( msgRes ):
         if msgRes['isMorningMsg'] == True:
             morningMsg = msgRes['morningMsg']
             line_bot_api.push_message( user_id, messages=TextSendMessage(text=morningMsg))
+            time.sleep(2)
         
         if msgRes['isStamp'] == True:
             stampNum = StickerSendMessage( package_id=msgRes['stampMsg'][0], sticker_id=msgRes['stampMsg'][1])
             line_bot_api.push_message( user_id, messages=stampNum)
+            time.sleep(2)
             
         if msgRes['isWeatherMsg'] == True:
             weatherMsg = msgRes['WeatherMsg']
